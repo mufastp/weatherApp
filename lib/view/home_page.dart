@@ -16,6 +16,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+int buttonindex = -1;
 String day = 'Morning';
 
 class _HomePageState extends State<HomePage> {
@@ -74,7 +75,7 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () {},
                 icon: Icon(Icons.more_vert_rounded, size: 28)),
             title: Text(
-              'Spike Storm',
+              'Weather App',
               style: TextStyle(fontSize: 25),
             ),
             elevation: 0,
@@ -200,11 +201,18 @@ class MySearch extends SearchDelegate {
       );
   @override
   Widget buildResults(BuildContext context) => Center(
-        child: Text(
-          context
-              .read<DataProvider>()
-              .searchlist[dataNames.indexOf(query)]
-              .toString(),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(dataNames[buttonindex],style: TextStyle(fontSize: 50,fontWeight: FontWeight.w600,color: Colors.red),),
+            Text(
+              context
+                  .read<DataProvider>()
+                  .searchlist[dataNames.indexOf(query)]
+                  .toString(),
+              style: TextStyle(fontSize: 40, fontWeight: FontWeight.w400),
+            ),
+          ],
         ),
       );
   //flutter search bar with listview
@@ -219,10 +227,12 @@ class MySearch extends SearchDelegate {
     return ListView.builder(
         itemCount: suggesstions.length,
         itemBuilder: (context, index) {
-          final suggestion = suggesstions[index];
+          buttonindex = index;
+          final suggestion = suggesstions[buttonindex];
           return ListTile(
             title: Text(suggestion),
             onTap: () {
+              buttonindex = index;
               query = suggestion;
               showResults(context);
             },

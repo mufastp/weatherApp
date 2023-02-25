@@ -35,6 +35,7 @@ class DataProvider with ChangeNotifier {
     // print(response.body);
     print("response 100");
     if (response.statusCode == 200) {
+     
       // print(response.body);
       datas = WeatherModelFromJson(response.body);
       print(datas);
